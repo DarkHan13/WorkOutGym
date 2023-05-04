@@ -1,55 +1,92 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import '../data/database.dart';
+import '../utils/goals_dialog.dart';
+import '../utils/tile.dart';
 
-class UserGoals extends StatelessWidget{
+class UserGoals extends StatefulWidget {
   const UserGoals({super.key});
 
-  Widget mycard(String task){
-    return Card(
-      elevation: 5.0,
-      margin: const EdgeInsets.symmetric(
-        horizontal: 10.0,
-        vertical: 5.0,
-      ),
-      child: Container(
-        padding: const EdgeInsets.all(5.0),
-        child: ListTile(
-          title: Text(
-            "$task",
-          ),
-          onLongPress: (){},
-        ),
-      ),
+  @override
+  State<UserGoals> createState() => _GoalsPageState();
+}
+
+class _GoalsPageState extends State<UserGoals> {
+  final _myBox = Hive.box('mybox');
+  ToDoDataBase db = ToDoDataBase();
+
+  @override
+  void initState() {
+    if (_myBox.get("TODOLIST") == null) {
+      db.createInitialData();
+    } else {
+      db.loadData();
+    }
+
+    super.initState();
+  }
+
+  final _controller = TextEditingController();
+
+  void checkBoxChanged(bool? value, int index) {
+    setState(() {
+      db.toDoList[index][1] = !db.toDoList[index][1];
+    });
+    db.updateDataBase();
+  }
+
+  void saveNewTask() {
+    setState(() {
+      db.toDoList.add([_controller.text, false]);
+      _controller.clear();
+    });
+    Navigator.of(context).pop();
+    db.updateDataBase();
+  }
+
+  void createNewTask() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DialogBox(
+          controller: _controller,
+          onSave: saveNewTask,
+          onCancel: () => Navigator.of(context).pop(),
+        );
+      },
     );
   }
 
+  void deleteTask(int index) {
+    setState(() {
+      db.toDoList.removeAt(index);
+    });
+    db.updateDataBase();
+  }
+
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){},
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
       appBar: AppBar(
-        title: const Text(
-          "Мои Цели",
-          style: TextStyle(
-            fontFamily: "Raleway",
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        elevation: 0,
         backgroundColor: Colors.black,
+        title: const Text("Цели"),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            mycard("Медитация"),
-            mycard("Тренировака")
-          ],
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: createNewTask,
+        child: Icon(Icons.add),
+      ),
+      body: ListView.builder(
+        itemCount: db.toDoList.length,
+        itemBuilder: (context, index) {
+          return ToDoTile(
+            taskName: db.toDoList[index][0],
+            taskCompleted: db.toDoList[index][1],
+            onChanged: (value) => checkBoxChanged(value, index),
+            deleteFunction: (context) => deleteTask(index),
+          );
+        },
       ),
     );
   }
