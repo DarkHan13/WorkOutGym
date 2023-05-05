@@ -13,6 +13,8 @@ class UserProfile extends StatelessWidget{
         title: const Text("Профиль"),
         centerTitle: true,
       ),
+
+
       body: ListView(
         padding: const EdgeInsets.all(10),
         children: [
@@ -20,7 +22,9 @@ class UserProfile extends StatelessWidget{
             children: const [
               CircleAvatar(
                 radius: 50,
+
                 backgroundImage: NetworkImage(
+
                   "https://kartinkof.club/uploads/posts/2022-09/1662325054_2-kartinkof-club-p-novie-i-krasivie-kartinki-kachok-4.jpg",
                 ),
               ),
@@ -35,6 +39,9 @@ class UserProfile extends StatelessWidget{
               Text("")
             ],
           ),
+
+
+
           const SizedBox(height: 35),
           ...List.generate(
             customListTiles.length,
@@ -55,6 +62,8 @@ class UserProfile extends StatelessWidget{
             },
           )
         ],
+
+
       ),
     );
   }
