@@ -1,8 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UserProfile extends StatelessWidget{
   const UserProfile({super.key});
+
+  void signUserOut() {
+    FirebaseAuth.instance.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,13 +54,16 @@ class UserProfile extends StatelessWidget{
               final tile = customListTiles[index];
               return Padding(
                 padding: const EdgeInsets.only(bottom: 5),
-                child: Card(
-                  elevation: 4,
-                  shadowColor: Colors.black12,
-                  child: ListTile(
-                    leading: Icon(tile.icon),
-                    title: Text(tile.title),
-                    trailing: const Icon(Icons.chevron_right),
+                child: GestureDetector(
+                  onTap: signUserOut,
+                  child: Card(
+                    elevation: 4,
+                    shadowColor: Colors.black12,
+                    child: ListTile(
+                      leading: Icon(tile.icon),
+                      title: Text(tile.title),
+                      trailing: const Icon(Icons.chevron_right),
+                    ),
                   ),
                 ),
               );

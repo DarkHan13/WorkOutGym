@@ -1,21 +1,22 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:work_out_gym/components/dh_button.dart';
 import 'package:work_out_gym/components/dh_textField.dart';
-import 'package:work_out_gym/pages/goals.dart';
-import 'package:work_out_gym/pages/nutrition.dart';
-import 'package:work_out_gym/pages/profile.dart';
-import 'package:work_out_gym/pages/tips.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:work_out_gym/firebase_options.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
 
   // text editing controllers
-  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   // sign user function
-  void signUserIn() {
-    // TODO: Make sign in logic
+  void signUserIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text, password: passwordController.text
+    );
   }
 
   @override
@@ -51,7 +52,7 @@ class LoginPage extends StatelessWidget {
 
                 // username textfield
                 DHTextField(
-                  controller: usernameController,
+                  controller: emailController,
                   hintText: 'Username',
                   obscureText: false,
                 ),
