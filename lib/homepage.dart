@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:work_out_gym/pages/goals.dart';
 import 'package:work_out_gym/pages/nutrition.dart';
@@ -6,6 +7,7 @@ import 'package:work_out_gym/pages/tips.dart';
 
 class HomePage extends StatefulWidget{
   const HomePage({Key? key}): super(key: key);
+
 
   @override
   _HomePageState createState()=> _HomePageState();

@@ -1,8 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class UserProfile extends StatelessWidget{
-  const UserProfile({super.key});
+  UserProfile({super.key});
+
+  final user = FirebaseAuth.instance.currentUser!;
+
+  void signUserOut() {
+    FirebaseAuth.instance.signOut();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +27,8 @@ class UserProfile extends StatelessWidget{
         padding: const EdgeInsets.all(10),
         children: [
           Column(
-            children: const [
-              CircleAvatar(
+            children: [
+              const CircleAvatar(
                 radius: 50,
 
                 backgroundImage: NetworkImage(
@@ -30,7 +38,7 @@ class UserProfile extends StatelessWidget{
               ),
               SizedBox(height: 10),
               Text(
-                "Жанторе Ермуханбетов",
+                user.email != null ? user.email! : "Загрзука",
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -49,13 +57,16 @@ class UserProfile extends StatelessWidget{
               final tile = customListTiles[index];
               return Padding(
                 padding: const EdgeInsets.only(bottom: 5),
-                child: Card(
-                  elevation: 4,
-                  shadowColor: Colors.black12,
-                  child: ListTile(
-                    leading: Icon(tile.icon),
-                    title: Text(tile.title),
-                    trailing: const Icon(Icons.chevron_right),
+                child: GestureDetector(
+                  onTap: signUserOut,
+                  child: Card(
+                    elevation: 4,
+                    shadowColor: Colors.black12,
+                    child: ListTile(
+                      leading: Icon(tile.icon),
+                      title: Text(tile.title),
+                      trailing: const Icon(Icons.chevron_right),
+                    ),
                   ),
                 ),
               );
@@ -72,27 +83,37 @@ class UserProfile extends StatelessWidget{
 class CustomListTile {
   final IconData icon;
   final String title;
+  final void Function() onTap;
   CustomListTile({
     required this.icon,
     required this.title,
+    required this.onTap,
   });
 }
+
+
 
 List<CustomListTile> customListTiles = [
   CustomListTile(
     icon: Icons.insights,
     title: "История прогресса",
+    onTap: () {},
   ),
   CustomListTile(
     icon: Icons.photo_camera_outlined,
     title: "Фотографии",
+    onTap: () {},
   ),
   CustomListTile(
     title: "Настройки",
     icon: CupertinoIcons.settings,
+    onTap: () {},
   ),
   CustomListTile(
     title: "Выйти",
     icon: CupertinoIcons.escape,
+    onTap: () {
+      FirebaseAuth.instance.signOut();
+    },
   ),
 ];
