@@ -4,33 +4,43 @@ import 'package:work_out_gym/components/dh_button.dart';
 import 'package:work_out_gym/components/dh_textField.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:work_out_gym/firebase_options.dart';
-import 'package:work_out_gym/pages/register.dart';
-import 'package:work_out_gym/services/auth_services.dart';
 
-class LoginPage extends StatefulWidget {
+import '../services/auth_services.dart';
+import 'login.dart';
+
+class RegisterPage extends StatefulWidget {
   final Function()? onTap;
-  const LoginPage({Key? key, required this.onTap}) : super(key: key);
+  const RegisterPage({Key? key, required this.onTap}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   // text editing controllers
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
 
-  // navigate to register page
-  void navigateToRegister() {
+  final passwordConfirmController = TextEditingController();
+
+  // navigate to login page
+  void navigateToLogin() {
     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)
-      {
-        return RegisterPage(onTap: () {});
-      }));
+    {
+      return LoginPage(onTap: () {});
+    }));
   }
 
   // sign user function
-  void signUserIn() async {
+  void signUserUp() async {
+
+    if (passwordController.text != passwordConfirmController.text) {
+      // show error message
+      showErrorMessage("Password don't match!");
+      return;
+    }
+
     // show loading circle
     showDialog(
       context: context,
@@ -41,12 +51,13 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
 
-    // try sign in
+    // try sign up
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text,
           password: passwordController.text
-      ).then((value) => Navigator.pop(context));
+      );
+      Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
 
@@ -74,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false, // set it to false
+        // resizeToAvoidBottomInset: false, // set it to false
         backgroundColor: Colors.grey[300],
         body: SingleChildScrollView(
           child: SafeArea(
@@ -82,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 10),
 
                   // logo
                   const Icon(
@@ -90,18 +101,18 @@ class _LoginPageState extends State<LoginPage> {
                     size: 100,
                   ),
 
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 10),
 
-                  // welcome back, you've been missed
+                  // Let's create an account for you!
                   Text(
-                    'Welcome back you\'ve been missed',
+                    'Let\'s create an account for you!',
                     style: TextStyle(
                       color: Colors.grey[300],
                       fontSize: 16,
                     ),
                   ),
 
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 20),
 
                   // username textfield
                   DHTextField(
@@ -121,25 +132,20 @@ class _LoginPageState extends State<LoginPage> {
 
                   const SizedBox(height: 10),
 
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Forgot Password?',
-                          style: TextStyle(color: Colors.grey[600]),
-                        ),
-                      ],
-                    ),
+                  // confirm password textfield
+                  DHTextField(
+                    controller: passwordConfirmController,
+                    hintText: 'Confirm Password',
+                    obscureText: true,
                   ),
 
-                  const SizedBox(height: 25),
+
+                  const SizedBox(height: 20),
 
                   // sign in btn
-                  DHButton(onTap: signUserIn, text: "Sign in"),
+                  DHButton(onTap: signUserUp, text: "Sign up"),
 
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 20),
 
                   // or continue with
                   Padding(
@@ -192,19 +198,20 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
 
+
                   const SizedBox(height: 25),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'not a member?',
+                        'Already have an account?',
                         style: TextStyle(color: Colors.grey[700]),
                       ),
                       const SizedBox(width: 4),
                       GestureDetector(
                         onTap: widget.onTap!,
-                        child: const Text('Register now',
+                        child: const Text('Login now',
                             style: TextStyle(
                               color: Colors.blue,
                               fontWeight: FontWeight.bold,
