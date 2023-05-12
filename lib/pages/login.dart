@@ -2,8 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:work_out_gym/components/dh_button.dart';
 import 'package:work_out_gym/components/dh_textField.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:work_out_gym/firebase_options.dart';
 import 'package:work_out_gym/pages/register.dart';
 import 'package:work_out_gym/services/auth_services.dart';
 
