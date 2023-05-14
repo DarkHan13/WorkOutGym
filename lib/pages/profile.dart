@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:work_out_gym/pages/profile/profile_images.dart';
 
 class UserProfile extends StatelessWidget {
   UserProfile({super.key});
@@ -20,6 +21,7 @@ class UserProfile extends StatelessWidget {
         title: const Text("Профиль"),
         centerTitle: true,
       ),
+
       backgroundColor: const Color(0xFF1c1c1e),
       body: ListView(
         padding: const EdgeInsets.all(10),
@@ -51,7 +53,9 @@ class UserProfile extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 5),
                 child: GestureDetector(
-                  onTap: tile.onTap,
+                  onTap: () {
+                      tile.onTap(context);
+                  },
                   child: Card(
                     color: Colors.blue,
                     elevation: 4,
@@ -79,7 +83,7 @@ class UserProfile extends StatelessWidget {
 class CustomListTile {
   final IconData icon;
   final String title;
-  final void Function() onTap;
+  final void Function(BuildContext) onTap;
 
   CustomListTile({
     required this.icon,
@@ -92,22 +96,25 @@ List<CustomListTile> customListTiles = [
   CustomListTile(
     icon: Icons.insights,
     title: "История прогресса",
-    onTap: () {},
+    onTap: (context) {},
   ),
   CustomListTile(
     icon: Icons.photo_camera_outlined,
     title: "Фотографии",
-    onTap: () {},
+    onTap: (context) {
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => ProfileImages()));
+    },
   ),
   CustomListTile(
     title: "Настройки",
     icon: CupertinoIcons.settings,
-    onTap: () {},
+    onTap: (context) {},
   ),
   CustomListTile(
     title: "Выйти",
     icon: CupertinoIcons.escape,
-    onTap: () {
+    onTap: (context) {
       FirebaseAuth.instance.signOut();
     },
   ),
