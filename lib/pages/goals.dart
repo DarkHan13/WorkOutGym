@@ -69,10 +69,11 @@ class _GoalsPageState extends State<UserGoals> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.black,
+        backgroundColor: const Color(0xFF242328),
         title: const Text("Цели"),
         centerTitle: true,
       ),
+      backgroundColor: const Color(0xFF1c1c1e),
       floatingActionButton: FloatingActionButton(
         onPressed: createNewTask,
         child: Icon(Icons.add),
