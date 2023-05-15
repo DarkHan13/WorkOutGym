@@ -5,6 +5,7 @@ import 'package:work_out_gym/firebase_options.dart';
 import 'package:work_out_gym/pages/auth.dart';
 import 'package:work_out_gym/pages/login.dart';
 import 'homepage.dart';
+
 void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
