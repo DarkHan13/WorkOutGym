@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,9 +24,17 @@ class _ProfileImagesState extends State<ProfileImages> {
 
   String imageURL = 'as';
 
-  final CollectionReference _reference =
-    FirebaseFirestore.instance.collection('profile images');
+  DatabaseReference? dbRef;
+  CollectionReference? _reference;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    dbRef = FirebaseDatabase.instance.ref().child('profile_images');
+    _reference =
+        FirebaseFirestore.instance.collection('profile_images');
+  }
 
   Future _pickImage(ImageSource source) async {
     try {
@@ -137,7 +146,7 @@ class _ProfileImagesState extends State<ProfileImages> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.white,
-                          /*image: DecorationImage(
+                         /* image: DecorationImage(
                             image: FileImage(_image!),
                             fit: BoxFit.cover,
                           ),*/
@@ -150,7 +159,7 @@ class _ProfileImagesState extends State<ProfileImages> {
             ),
           DHButton(
               onTap: () {
-                if (imageURL.isEmpty) {
+                /*if (imageURL.isEmpty) {
                   showErrorMessage("No image found");
 
                   return;
@@ -163,7 +172,9 @@ class _ProfileImagesState extends State<ProfileImages> {
                   'image': imageURL
                 };
                 print(dataToSend);
-                _reference.add(dataToSend);
+                _reference?.add(dataToSend);*/
+
+                uploadFile();
               },
               text: "A $imageURL")
 
@@ -172,4 +183,17 @@ class _ProfileImagesState extends State<ProfileImages> {
       ),
     );
   }
+
+  uploadFile() async {
+    var email = FirebaseAuth.instance.currentUser!.email!;
+    Map<String, String> dataToSend= {
+      'email': email,
+      'image': imageURL
+    };
+
+    dbRef!.push().set(dataToSend).whenComplete(() {
+      showErrorMessage("Done");
+    });
+  }
+
 }

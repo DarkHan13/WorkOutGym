@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "743910087774",
+    "firebase_url": "https://workoutgym-e0b92-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "workoutgym-e0b92",
     "storage_bucket": "workoutgym-e0b92.appspot.com"
   },
@@ -14,7 +15,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "743910087774-kls4q3gfjfv4uk72i8ijjld7c9qsm4i0.apps.googleusercontent.com",
+          "client_id": "743910087774-7tf2lqcfm6qr86lbj6ikat12tmantj8a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.work_out_gym",
+            "certificate_hash": "01c6092e123535e3ead8900f57ae61f59d5ea9bd"
+          }
+        },
+        {
+          "client_id": "743910087774-4gs8adp063ll5samrnh1864p7i051qv8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,8 +36,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "743910087774-kls4q3gfjfv4uk72i8ijjld7c9qsm4i0.apps.googleusercontent.com",
+              "client_id": "743910087774-4gs8adp063ll5samrnh1864p7i051qv8.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "743910087774-tthq6ofba753lnrbpch12gcubg0acsnk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.workOutGym"
+              }
             }
           ]
         }
