@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -19,10 +21,38 @@ class ProfileImages extends StatefulWidget {
 class _ProfileImagesState extends State<ProfileImages> {
   File? _image;
 
+  String imageURL = 'as';
+
+  final CollectionReference _reference =
+    FirebaseFirestore.instance.collection('profile images');
+
+
   Future _pickImage(ImageSource source) async {
     try {
-      final image = await ImagePicker().pickImage(source: source);
+
+      print("START PICKING");
+      XFile? image = await ImagePicker().pickImage(source: source);
       if (image == null) return;
+
+      String uid = DateTime.now().millisecondsSinceEpoch.toString();
+
+      // Get a reference to storage root
+      Reference refRoot = FirebaseStorage.instance.ref();
+      Reference referenceDirImages = refRoot.child('images');
+
+      // Create a ref for image to be stored
+      Reference refImageToUpload = referenceDirImages.child(uid);
+
+      // Store the file
+      try {
+        refImageToUpload.putFile(File(image!.path));
+        print("IMAGEURL");
+        imageURL = await refImageToUpload.getDownloadURL();
+        print("UPLOADED SSSSSSSSSSSSS");
+      } on Exception catch (e) {
+        print(e.toString());
+      }
+
       File? img = File(image.path);
       setState(() {
         _image = img;
@@ -32,6 +62,20 @@ class _ProfileImagesState extends State<ProfileImages> {
       print(e);
       Navigator.of(context).pop();
     }
+  }
+
+  void showErrorMessage(String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            message,
+            style: const TextStyle(color: Colors.red),
+          ),
+        );
+      },
+    );
   }
 
   void _showSelectPhotoOptions(BuildContext context) {
@@ -64,92 +108,67 @@ class _ProfileImagesState extends State<ProfileImages> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: const Color(0xFF242328),
+        title: const Text("Профиль"),
+        centerTitle: true,
+      ),
+      backgroundColor: const Color(0xFF1c1c1e),
       body: SafeArea(
-        child: Padding(
-          padding:
-          const EdgeInsets.only(left: 20, right: 20, bottom: 30, top: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Text(
-                        'Set a photo of yourself',
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        'Photos make your profile more engaging',
-                      ),
-                    ],
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20,),
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 15,
+                    childAspectRatio: 0.5625,
                   ),
-                ],
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(28.0),
-                child: Center(
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {
-                      _showSelectPhotoOptions(context);
-                    },
-                    child: Center(
+                  itemBuilder: (context, index) {
+                    return RawMaterialButton(
+                        onPressed: () {
+                          _showSelectPhotoOptions(context);
+                        },
                       child: Container(
-                          height: 200.0,
-                          width: 200.0,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.grey.shade200,
-                          ),
-                          child: Center(
-                            child: _image == null
-                                ? const Text(
-                              'No image selected',
-                              style: TextStyle(fontSize: 20),
-                            )
-                                : CircleAvatar(
-                              backgroundImage: FileImage(_image!),
-                              radius: 200.0,
-                            ),
-                          )),
-                    ),
-                  ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
+                          /*image: DecorationImage(
+                            image: FileImage(_image!),
+                            fit: BoxFit.cover,
+                          ),*/
+                        ),
+                      ),
+                    );
+                  }, itemCount: 10,
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    FirebaseAuth.instance.currentUser!.uid,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  DHButton(
-                    onTap: () => _showSelectPhotoOptions(context),
-                    text: 'Add a Photo',
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+            ),
+          DHButton(
+              onTap: () {
+                if (imageURL.isEmpty) {
+                  showErrorMessage("No image found");
+
+                  return;
+                }
+
+                String email = "def";
+                email = FirebaseAuth.instance.currentUser!.email!;
+                Map<String, String> dataToSend= {
+                  'email': email,
+                  'image': imageURL
+                };
+                print(dataToSend);
+                _reference.add(dataToSend);
+              },
+              text: "A $imageURL")
+
+          ],
+        )
       ),
     );
   }
