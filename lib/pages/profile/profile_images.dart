@@ -53,23 +53,19 @@ class _ProfileImagesState extends State<ProfileImages> {
       Reference refImageToUpload = referenceDirImages.child(uid);
 
       // Store the file
-      try {
-        refImageToUpload.putFile(File(image!.path));
-        print("IMAGEURL");
-        imageURL = await refImageToUpload.getDownloadURL();
-        print("UPLOADED SSSSSSSSSSSSS");
-      } on Exception catch (e) {
-        print(e.toString());
-      }
+
+      await refImageToUpload.putFile(File(image!.path));
+      print("IMAGEURL");
+      imageURL = await refImageToUpload.getDownloadURL();
+      print("UPLOADED SSSSSSSSSSSSS");
+
 
       File? img = File(image.path);
       setState(() {
         _image = img;
-        Navigator.of(context).pop();
       });
     } on PlatformException catch (e) {
       print(e);
-      Navigator.of(context).pop();
     }
   }
 
@@ -145,7 +141,8 @@ class _ProfileImagesState extends State<ProfileImages> {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
+                          color: const Color(0xff242328),
+
                          /* image: DecorationImage(
                             image: FileImage(_image!),
                             fit: BoxFit.cover,
@@ -159,21 +156,6 @@ class _ProfileImagesState extends State<ProfileImages> {
             ),
           DHButton(
               onTap: () {
-                /*if (imageURL.isEmpty) {
-                  showErrorMessage("No image found");
-
-                  return;
-                }
-
-                String email = "def";
-                email = FirebaseAuth.instance.currentUser!.email!;
-                Map<String, String> dataToSend= {
-                  'email': email,
-                  'image': imageURL
-                };
-                print(dataToSend);
-                _reference?.add(dataToSend);*/
-
                 uploadFile();
               },
               text: "A $imageURL")
