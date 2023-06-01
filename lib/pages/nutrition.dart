@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:work_out_gym/pages/drying_breakfast.dart';
+import 'package:work_out_gym/pages/drying_snacks.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class UserNutrition extends StatelessWidget{
@@ -102,15 +103,24 @@ class DryingMenu extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          margin: const EdgeInsets.all(5.0),
-          child: ListView(
-            children: const <Widget>[
-              Image(
-                image: NetworkImage('https://i.ytimg.com/vi/ttyE6LNnNFc/maxresdefault.jpg'),
-              ),
-              Text('Перекус'),
-            ],
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (BuildContext context) {
+                return const DryingSnacks();
+              })
+            );
+          },
+          child: Container(
+            margin: const EdgeInsets.all(5.0),
+            child: ListView(
+              children: const <Widget>[
+                Image(
+                  image: NetworkImage('https://i.ytimg.com/vi/ttyE6LNnNFc/maxresdefault.jpg'),
+                ),
+                Text('Перекус'),
+              ],
+            ),
           ),
         ),
         Container(
