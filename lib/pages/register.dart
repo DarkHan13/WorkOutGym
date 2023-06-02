@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:work_out_gym/components/dh_button.dart';
 import 'package:work_out_gym/components/dh_textField.dart';
@@ -19,10 +21,18 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   // text editing controllers
   final emailController = TextEditingController();
-
   final passwordController = TextEditingController();
-
   final passwordConfirmController = TextEditingController();
+  final firstnameController = TextEditingController();
+  final lastnameController = TextEditingController();
+
+  DatabaseReference? dbRef;
+
+  @override
+  void initState() {
+    super.initState();
+    dbRef = FirebaseDatabase.instance.ref().child('users');
+  }
 
   // navigate to login page
   void navigateToLogin() {
@@ -53,17 +63,41 @@ class _RegisterPageState extends State<RegisterPage> {
 
     // try sign up
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text
+      // create user
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim()
       );
+      // add user details
+      addUserDetails(
+          firstnameController.text.trim(),
+          lastnameController.text.trim(),
+          emailController.text.trim(),
+          userCredential.user!.uid,
+
+      );
+
+
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
 
       showErrorMessage(e.code);
     }
+  }
 
+  Future addUserDetails(
+      String firstname, String lastname,
+      String email, String uid
+      ) async {
+    DatabaseReference newRef = dbRef!.child(uid);
+    Map<String, String> dataToSend= {
+      'email': email,
+      'firstname': firstname,
+      'lastname': lastname,
+      'imageURL': ''
+    };
+    await newRef!.set(dataToSend);
   }
 
   void showErrorMessage(String message) {
@@ -80,7 +114,13 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    passwordConfirmController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,31 +133,41 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 10),
-
-                  // logo
-                  const Icon(
-                    Icons.lock,
-                    size: 100,
-                  ),
-
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 30),
 
                   // Let's create an account for you!
-                  Text(
+                  const Text(
                     'Let\'s create an account for you!',
                     style: TextStyle(
-                      color: Colors.grey[300],
+                      color: Colors.black,
                       fontSize: 16,
                     ),
                   ),
 
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 30),
 
-                  // username textfield
+                  // firstname textfield
+                  DHTextField(
+                    controller: firstnameController,
+                    hintText: 'Имя',
+                    obscureText: false,
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  // lastname textfield
+                  DHTextField(
+                    controller: lastnameController,
+                    hintText: 'Фамилия',
+                    obscureText: false,
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  // email textfield
                   DHTextField(
                     controller: emailController,
-                    hintText: 'Username',
+                    hintText: 'Почта',
                     obscureText: false,
                   ),
 
@@ -126,7 +176,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   // password textfield
                   DHTextField(
                     controller: passwordController,
-                    hintText: 'Password',
+                    hintText: 'Пароль',
                     obscureText: true,
                   ),
 
@@ -135,7 +185,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   // confirm password textfield
                   DHTextField(
                     controller: passwordConfirmController,
-                    hintText: 'Confirm Password',
+                    hintText: 'Подтвердите пароль',
                     obscureText: true,
                   ),
 

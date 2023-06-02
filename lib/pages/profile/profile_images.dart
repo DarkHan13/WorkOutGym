@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,9 +24,17 @@ class _ProfileImagesState extends State<ProfileImages> {
 
   String imageURL = 'as';
 
-  final CollectionReference _reference =
-    FirebaseFirestore.instance.collection('profile images');
+  DatabaseReference? dbRef;
+  CollectionReference? _reference;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    dbRef = FirebaseDatabase.instance.ref().child('profile_images');
+    _reference =
+        FirebaseFirestore.instance.collection('profile_images');
+  }
 
   Future _pickImage(ImageSource source) async {
     try {
@@ -44,23 +53,19 @@ class _ProfileImagesState extends State<ProfileImages> {
       Reference refImageToUpload = referenceDirImages.child(uid);
 
       // Store the file
-      try {
-        refImageToUpload.putFile(File(image!.path));
-        print("IMAGEURL");
-        imageURL = await refImageToUpload.getDownloadURL();
-        print("UPLOADED SSSSSSSSSSSSS");
-      } on Exception catch (e) {
-        print(e.toString());
-      }
+
+      await refImageToUpload.putFile(File(image!.path));
+      print("IMAGEURL");
+      imageURL = await refImageToUpload.getDownloadURL();
+      print("UPLOADED SSSSSSSSSSSSS");
+
 
       File? img = File(image.path);
       setState(() {
         _image = img;
-        Navigator.of(context).pop();
       });
     } on PlatformException catch (e) {
       print(e);
-      Navigator.of(context).pop();
     }
   }
 
@@ -136,8 +141,9 @@ class _ProfileImagesState extends State<ProfileImages> {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                          /*image: DecorationImage(
+                          color: const Color(0xff242328),
+
+                         /* image: DecorationImage(
                             image: FileImage(_image!),
                             fit: BoxFit.cover,
                           ),*/
@@ -150,20 +156,7 @@ class _ProfileImagesState extends State<ProfileImages> {
             ),
           DHButton(
               onTap: () {
-                if (imageURL.isEmpty) {
-                  showErrorMessage("No image found");
-
-                  return;
-                }
-
-                String email = "def";
-                email = FirebaseAuth.instance.currentUser!.email!;
-                Map<String, String> dataToSend= {
-                  'email': email,
-                  'image': imageURL
-                };
-                print(dataToSend);
-                _reference.add(dataToSend);
+                uploadFile();
               },
               text: "A $imageURL")
 
@@ -172,4 +165,17 @@ class _ProfileImagesState extends State<ProfileImages> {
       ),
     );
   }
+
+  uploadFile() async {
+    var email = FirebaseAuth.instance.currentUser!.email!;
+    Map<String, String> dataToSend= {
+      'email': email,
+      'image': imageURL
+    };
+
+    dbRef!.push().set(dataToSend).whenComplete(() {
+      showErrorMessage("Done");
+    });
+  }
+
 }

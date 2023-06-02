@@ -139,7 +139,9 @@ class DryingMenu extends StatelessWidget {
           child: ListView(
             children: const <Widget>[
               Image(
+
                 image: NetworkImage('https://ggym.ru/wp-content/uploads/2018/12/egg.jpg'),
+
               ),
               Text('Ужин')
             ],
@@ -214,7 +216,9 @@ class MassMenu extends StatelessWidget {
           child: ListView(
             children: const <Widget>[
               Image(
+
                 image: NetworkImage('https://donsport.ru/upload/blog/racion-pitaniya-pri-nabore-vesa.jpg'),
+
               ),
               Text('Перекус'),
             ],
@@ -225,7 +229,9 @@ class MassMenu extends StatelessWidget {
           child: ListView(
             children: const <Widget>[
               Image(
+
                 image: NetworkImage('https://mrdjemiuszero.com/upload/iblock/764/ht8v2twxew4v1e190koklztt45vdav5t.jpg'),
+
               ),
               Text('Обед'),
             ],
