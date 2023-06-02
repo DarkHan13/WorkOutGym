@@ -1,7 +1,6 @@
 import 'package:bulleted_list/bulleted_list.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:work_out_gym/pages/meal.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class DryingBreakfast extends StatefulWidget {
@@ -33,17 +32,7 @@ class _DryingBreakfastState extends State<DryingBreakfast> {
             },
             controller: _pageController,
             children: const <Widget>[
-              Meal(
-                  videoId: 'pXxnjW0LvP8',
-                  name: 'Яичница с беконом',
-                  ingredients: [
-                    'яйца куриные',
-                    'лук',
-                    'бекон',
-                    'сосиски',
-                    'сыр',
-                  ],
-              ),
+              FirstMeal(),
               SecondMeal(),
               ThirdMeal(),
               FourthMeal(),
@@ -64,6 +53,62 @@ class _DryingBreakfastState extends State<DryingBreakfast> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class FirstMeal extends StatefulWidget {
+  const FirstMeal({super.key});
+
+  @override
+  State<FirstMeal> createState() => _FirstMealState();
+}
+
+class _FirstMealState extends State<FirstMeal> {
+  late YoutubePlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = YoutubePlayerController(
+      initialVideoId: 'pXxnjW0LvP8',
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        YoutubePlayer(controller: _controller),
+        const Text(
+          'Яичница с беконом',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        const Text(
+          'Ингридиенты',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        const BulletedList(
+          style: TextStyle(
+            color: Colors.white,
+          ),
+          bulletColor: Colors.white,
+          listItems: [
+            'яйца куриные',
+            'лук',
+            'бекон',
+            'сосиски',
+            'сыр',
+          ],
+        ),
+      ],
     );
   }
 }

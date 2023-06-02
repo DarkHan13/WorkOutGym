@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:work_out_gym/pages/drying_breakfast.dart';
-import 'package:work_out_gym/pages/drying_lunch.dart';
 import 'package:work_out_gym/pages/drying_snacks.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -124,24 +123,15 @@ class DryingMenu extends StatelessWidget {
             ),
           ),
         ),
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(builder: (BuildContext context) {
-                return const DryingLunch();
-              })
-            );
-          },
-          child: Container(
-            margin: const EdgeInsets.all(5.0),
-            child: ListView(
-              children: const <Widget>[
-                Image(
-                  image: NetworkImage('https://levgon.ru/wp-content/uploads/2014/02/%D0%B3%D1%80%D1%83%D0%B4%D0%BA%D0%B0-%D1%81-%D1%80%D0%B8%D1%81%D0%BE%D0%BC.jpg'),
-                ),
-                Text('Обед'),
-              ],
-            ),
+        Container(
+          margin: const EdgeInsets.all(5.0),
+          child: ListView(
+            children: const <Widget>[
+              Image(
+                image: NetworkImage('https://levgon.ru/wp-content/uploads/2014/02/%D0%B3%D1%80%D1%83%D0%B4%D0%BA%D0%B0-%D1%81-%D1%80%D0%B8%D1%81%D0%BE%D0%BC.jpg'),
+              ),
+              Text('Обед'),
+            ],
           ),
         ),
         Container(
