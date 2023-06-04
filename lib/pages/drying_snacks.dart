@@ -1,142 +1,29 @@
-import 'package:bulleted_list/bulleted_list.dart';
 import 'package:flutter/material.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:work_out_gym/pages/four_meal.dart';
+import 'package:work_out_gym/pages/meal.dart';
 
-class DryingSnacks extends StatefulWidget {
+class DryingSnacks extends StatelessWidget {
   const DryingSnacks({super.key});
 
   @override
-  State<DryingSnacks> createState() => _DryingSnacksState();
-}
-
-class _DryingSnacksState extends State<DryingSnacks> {
-  final PageController _pageController = PageController();
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF1c1c1e),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF242328),
-        title: const Text('Сушка: Перекус'),
-      ),
-      body: Stack(
-        children: <Widget>[
-          PageView(
-            controller: _pageController,
-            children: const <Widget>[
-              FirstMeal(),
-              SecondMeal(),
-              ThirdMeal(),
-              FourthMeal(),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class FirstMeal extends StatefulWidget {
-  const FirstMeal({super.key});
-
-  @override
-  State<FirstMeal> createState() => _FirstMealState();
-}
-
-class _FirstMealState extends State<FirstMeal> {
-  late YoutubePlayerController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = YoutubePlayerController(
-      initialVideoId: 'w_2UIG4Wyl0',
-      flags: const YoutubePlayerFlags(
-        autoPlay: false,
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        YoutubePlayer(controller: _controller),
-        const Text(
-          'Сушеные овощные чипсы',
-          style: TextStyle(
-            color: Colors.white,
-          ),
+    return const FourMeal(
+      title: 'Сушка: Перекус',
+      meals: [
+        Meal(
+          videoId: 'w_2UIG4Wyl0',
+          name: 'Сушеные овощные чипсы',
+          ingredients: [
+            'морковь',
+            'свекла',
+            'сладкий перец',
+            'батат',
+          ],
         ),
-        const Text(
-          'Ингридиенты',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        const BulletedList(
-            style: TextStyle(
-              color: Colors.white,
-            ),
-            bulletColor: Colors.white,
-            listItems: [
-              'морковь',
-              'свекла',
-              'сладкий перец',
-              'батат',
-            ]
-        ),
-      ],
-    );
-  }
-
-}
-
-class SecondMeal extends StatefulWidget {
-  const SecondMeal({super.key});
-
-  @override
-  State<SecondMeal> createState() => _SecondMealState();
-}
-
-class _SecondMealState extends State<SecondMeal> {
-  late YoutubePlayerController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = YoutubePlayerController(
-      initialVideoId: 'U2NtcQhQEB4',
-      flags: const YoutubePlayerFlags(
-        autoPlay: false,
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        YoutubePlayer(controller: _controller),
-        const Text(
-          'Сушеные орехи и семена',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        const Text(
-          'Ингридиенты',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        const BulletedList(
-          style: TextStyle(
-            color: Colors.white,
-          ),
-          bulletColor: Colors.white,
-          listItems: [
+        Meal(
+          videoId: 'U2NtcQhQEB4',
+          name: 'Сушеные орехи и семена',
+          ingredients: [
             'миндаль',
             'фундук',
             'грецкий орех',
@@ -144,115 +31,20 @@ class _SecondMealState extends State<SecondMeal> {
             'тыквенные семечки',
           ],
         ),
-      ],
-    );
-  }
-}
-
-class ThirdMeal extends StatefulWidget {
-  const ThirdMeal({super.key});
-
-  @override
-  State<ThirdMeal> createState() => _ThirdMealState();
-}
-
-class _ThirdMealState extends State<ThirdMeal> {
-  late YoutubePlayerController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = YoutubePlayerController(
-      initialVideoId: 'OoOyWPfS_4w',
-      flags: const YoutubePlayerFlags(
-        autoPlay: false,
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        YoutubePlayer(controller: _controller),
-        const Text(
-          'Сушеные фруктовые рулетики',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        const Text(
-          'Ингридиенты',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        const BulletedList(
-          style: TextStyle(
-            color: Colors.white,
-          ),
-          bulletColor: Colors.white,
-          listItems: [
+        Meal(
+          videoId: 'OoOyWPfS_4w',
+          name: 'Сушеные фруктовые рулетики',
+          ingredients: [
             'изюм',
             'чернослив',
             'абрикосы',
           ],
         ),
-      ],
-    );
-  }
-}
-
-class FourthMeal extends StatefulWidget {
-  const FourthMeal({super.key});
-
-  @override
-  State<FourthMeal> createState() => _FourthMealState();
-}
-
-class _FourthMealState extends State<FourthMeal> {
-  late YoutubePlayerController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = YoutubePlayerController(
-      initialVideoId: 'VrSM_4vPVQY',
-      flags: const YoutubePlayerFlags(
-        autoPlay: false,
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        YoutubePlayer(controller: _controller),
-        const Text(
-          'Сушеные морские водоросли',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        const Text(
-          'Ингридиенты',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        const BulletedList(
-          style: TextStyle(
-            color: Colors.white,
-          ),
-          bulletColor: Colors.white,
-          listItems: <Widget>[
-            Text(
-              'морские водоросли',
-              style: TextStyle(
-                color: Colors.white
-              ),
-            ),
+        Meal(
+          videoId: 'VrSM_4vPVQY',
+          name: 'Сушеные морские водоросли',
+          ingredients: [
+            'морские водросли',
           ],
         ),
       ],
