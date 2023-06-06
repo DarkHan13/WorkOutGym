@@ -29,6 +29,8 @@ void main() async{
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
+  final ThemeData defaultTheme = ThemeData();
+
   final ThemeData darkTheme = ThemeData(
     primaryColor: Colors.white,
     scaffoldBackgroundColor: const Color(0xFF1c1c1e),
@@ -51,7 +53,7 @@ class MyApp extends StatelessWidget {
 
   final ThemeData lightTheme = ThemeData(
     primaryColor: Colors.black,
-    scaffoldBackgroundColor: const Color(0xFFF8F6F4),
+    scaffoldBackgroundColor: const Color(0xFFE3F4F4),
     appBarTheme: const AppBarTheme(
       backgroundColor: Color(0xFFC4DFDF),
       titleTextStyle: TextStyle(
@@ -61,19 +63,19 @@ class MyApp extends StatelessWidget {
         color: Colors.black,
       ),
     ),
-    tabBarTheme: const TabBarTheme(
+    tabBarTheme: TabBarTheme(
         labelColor: Colors.black87,
         indicator: UnderlineTabIndicator(
           borderSide: BorderSide(
-              color: Colors.orange,
+              color: Colors.orange.shade300,
               width: 3.0
           ),
         )
     ),
-    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      backgroundColor: Color(0xFFC4DFDF),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: const Color(0xFFC4DFDF),
       unselectedItemColor: Colors.black87,
-      selectedItemColor: Colors.orange,
+      selectedItemColor: Colors.orange.shade300,
     ),
     textTheme: const TextTheme(
       bodyMedium: TextStyle(
@@ -91,7 +93,7 @@ class MyApp extends StatelessWidget {
     } else if (themeName == ThemeName.light) {
       return lightTheme;
     } else {
-      return darkTheme;
+      return defaultTheme;
     }
   }
 
