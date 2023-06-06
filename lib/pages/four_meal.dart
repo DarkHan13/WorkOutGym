@@ -17,15 +17,13 @@ class FourMeal extends StatefulWidget {
 }
 
 class _FourMealState extends State<FourMeal> {
-  int _currentPageIndex = 0;
+  final int _currentPageIndex = 0;
   final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1c1c1e),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF242328),
         title: Text(widget.title),
       ),
       body: Stack(
@@ -51,5 +49,4 @@ class _FourMealState extends State<FourMeal> {
       ),
     );
   }
-
 }

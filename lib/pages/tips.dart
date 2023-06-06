@@ -5,10 +5,11 @@ class UserTips extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
-    return const Center(
-      child: Text(
-        'Советы',
-        style: TextStyle(fontSize: 30),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Советы'),
+        centerTitle: true,
+        elevation: 0,
       ),
     );
   }

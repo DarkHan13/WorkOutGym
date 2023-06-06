@@ -13,9 +13,7 @@ class UserNutrition extends StatelessWidget{
     return DefaultTabController(
         length: 2,
         child: Scaffold(
-          backgroundColor: const Color(0xFF1c1c1e),
           appBar: AppBar(
-            backgroundColor: const Color(0xFF242328),
             title: const Text('Питание'),
             centerTitle: true,
             bottom: const TabBar(
