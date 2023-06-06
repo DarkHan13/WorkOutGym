@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:work_out_gym/pages/drying_breakfast.dart';
-import 'package:work_out_gym/pages/drying_dinner.dart';
-import 'package:work_out_gym/pages/drying_lunch.dart';
-import 'package:work_out_gym/pages/drying_snacks.dart';
+import 'package:work_out_gym/pages/nutrition/drying_breakfast.dart';
+import 'package:work_out_gym/pages/nutrition/drying_dinner.dart';
+import 'package:work_out_gym/pages/nutrition/drying_lunch.dart';
+import 'package:work_out_gym/pages/nutrition/drying_snacks.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class UserNutrition extends StatelessWidget{

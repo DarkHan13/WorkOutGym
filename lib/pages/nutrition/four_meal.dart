@@ -1,6 +1,6 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:work_out_gym/pages/meal.dart';
+import 'package:work_out_gym/pages/nutrition/meal.dart';
 
 class FourMeal extends StatefulWidget {
   const FourMeal({

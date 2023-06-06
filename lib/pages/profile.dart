@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:work_out_gym/pages/profile/profile_images.dart';
+import 'package:work_out_gym/pages/settings.dart';
 
 class UserProfile extends StatelessWidget {
   UserProfile({super.key});
@@ -100,13 +101,19 @@ List<CustomListTile> customListTiles = [
     title: "Фотографии",
     onTap: (context) {
       Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => ProfileImages()));
+          MaterialPageRoute(builder: (context) => const ProfileImages()));
     },
   ),
   CustomListTile(
     title: "Настройки",
     icon: CupertinoIcons.settings,
-    onTap: (context) {},
+    onTap: (context) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (context) => const Settings(),
+        ),
+      );
+    },
   ),
   CustomListTile(
     title: "Выйти",
