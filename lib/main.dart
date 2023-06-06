@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:work_out_gym/firebase_options.dart';
 import 'package:work_out_gym/pages/auth.dart';
-import 'package:work_out_gym/pages/login.dart';
-import 'homepage.dart';
+import 'package:work_out_gym/theme_provider.dart';
 
 void main() async{
 
@@ -17,31 +17,88 @@ void main() async{
   var box = await Hive.openBox('mybox');
 
 
-  runApp(const MyApp());
+  runApp(
+      ChangeNotifierProvider<ThemeProvider>(
+        create: (_) => ThemeProvider(),
+        child: MyApp(),
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final ThemeData darkTheme = ThemeData(
+    primaryColor: Colors.white,
+    scaffoldBackgroundColor: const Color(0xFF1c1c1e),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Color(0xFF242328),
+    ),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: Color(0xFF242328),
+      unselectedItemColor: Colors.white,
+    ),
+    textTheme: const TextTheme(
+      bodyMedium: TextStyle(
+        color: Colors.white,
+      ),
+      titleMedium: TextStyle(
+        color: Colors.white,
+      ),
+    ),
+  );
+
+  final ThemeData lightTheme = ThemeData(
+    primaryColor: Colors.black,
+    scaffoldBackgroundColor: const Color(0xFFF8F6F4),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Color(0xFFC4DFDF),
+      titleTextStyle: TextStyle(
+        color: Colors.black,
+      ),
+      iconTheme: IconThemeData(
+        color: Colors.black,
+      ),
+    ),
+    tabBarTheme: const TabBarTheme(
+        labelColor: Colors.black87,
+        indicator: UnderlineTabIndicator(
+          borderSide: BorderSide(
+              color: Colors.orange,
+              width: 3.0
+          ),
+        )
+    ),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: Color(0xFFC4DFDF),
+      unselectedItemColor: Colors.black87,
+      selectedItemColor: Colors.orange,
+    ),
+    textTheme: const TextTheme(
+      bodyMedium: TextStyle(
+        color: Colors.black,
+      ),
+      titleMedium: TextStyle(
+        color: Colors.black,
+      ),
+    ),
+  );
+
+  ThemeData themePicker(ThemeName themeName) {
+    if (themeName == ThemeName.dark) {
+      return darkTheme;
+    } else if (themeName == ThemeName.light) {
+      return lightTheme;
+    } else {
+      return darkTheme;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFF1c1c1e),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFF242328),
-          // backgroundColor: Colors.deepOrange,
-        ),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: Color(0xFF242328),
-        ),
-        textTheme: const TextTheme(
-          bodyMedium: TextStyle(
-            color: Colors.white,
-          ),
-          titleMedium: TextStyle(
-            color: Colors.white,
-          ),
-        ),
+      theme: themePicker(
+          Provider.of<ThemeProvider>(context).themeName,
       ),
       debugShowCheckedModeBanner: false,
       home: const AuthPage(),

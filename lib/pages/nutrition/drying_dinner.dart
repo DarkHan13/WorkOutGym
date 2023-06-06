@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:work_out_gym/pages/four_meal.dart';
-import 'package:work_out_gym/pages/meal.dart';
+import 'package:work_out_gym/pages/nutrition/four_meal.dart';
+import 'package:work_out_gym/pages/nutrition/meal.dart';
 
 class DryingDinner extends StatelessWidget {
   const DryingDinner({super.key});

@@ -40,10 +40,8 @@ class _MealState extends State<Meal> {
         Text(widget.name),
         const Text('Ингридиенты'),
         BulletedList(
-          style: const TextStyle(
-            color: Colors.white,
-          ),
-          bulletColor: Colors.white,
+          style: Theme.of(context).textTheme.bodyMedium,
+          bulletColor: Theme.of(context).primaryColor,
           listItems: widget.ingredients,
         ),
       ],
