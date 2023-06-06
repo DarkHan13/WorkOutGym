@@ -17,12 +17,9 @@ class UserProfile extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color(0xFF242328),
         title: const Text("Профиль"),
         centerTitle: true,
       ),
-
-      backgroundColor: const Color(0xFF1c1c1e),
       body: ListView(
         padding: const EdgeInsets.all(10),
         children: [
@@ -42,7 +39,7 @@ class UserProfile extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text("")
+              const Text("")
             ],
           ),
           const SizedBox(height: 35),

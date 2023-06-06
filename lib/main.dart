@@ -24,9 +24,27 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(
+        scaffoldBackgroundColor: const Color(0xFF1c1c1e),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF242328),
+          // backgroundColor: Colors.deepOrange,
+        ),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: Color(0xFF242328),
+        ),
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(
+            color: Colors.white,
+          ),
+          titleMedium: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ),
       debugShowCheckedModeBanner: false,
-      home: AuthPage(),
+      home: const AuthPage(),
     );
   }
 }

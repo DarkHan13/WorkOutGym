@@ -1,6 +1,5 @@
 import 'package:bulleted_list/bulleted_list.dart';
 import 'package:flutter/material.dart';
-
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class Meal extends StatefulWidget {
@@ -38,18 +37,8 @@ class _MealState extends State<Meal> {
     return ListView(
       children: <Widget>[
         YoutubePlayer(controller: _controller),
-        Text(
-          widget.name,
-          style: const TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        const Text(
-          'Ингридиенты',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
+        Text(widget.name),
+        const Text('Ингридиенты'),
         BulletedList(
           style: const TextStyle(
             color: Colors.white,
