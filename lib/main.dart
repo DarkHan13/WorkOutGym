@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -5,10 +6,12 @@ import 'package:provider/provider.dart';
 import 'package:work_out_gym/firebase_options.dart';
 import 'package:work_out_gym/pages/auth.dart';
 import 'package:work_out_gym/theme_provider.dart';
+import 'package:work_out_gym/translations/codegen_loader.g.dart';
 
 void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -17,11 +20,16 @@ void main() async{
   await Hive.initFlutter();
   var box = await Hive.openBox('mybox');
 
-
   runApp(
       ChangeNotifierProvider<ThemeProvider>(
         create: (_) => ThemeProvider(),
-        child: MyApp(),
+        child: EasyLocalization(
+            supportedLocales: [Locale('en'), Locale('ru'), Locale('kk')],
+            path: 'assets/translations', // <-- change the path of the translation files
+            fallbackLocale: Locale('en'),
+            assetLoader: const CodegenLoader(),
+            child: MyApp()
+        ),
       )
   );
 }
@@ -100,6 +108,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       theme: themePicker(
           Provider.of<ThemeProvider>(context).themeName,
       ),

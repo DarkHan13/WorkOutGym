@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:work_out_gym/translations/locale_keys.g.dart';
 import '../data/database.dart';
 import '../utils/goals_dialog.dart';
 import '../utils/tile.dart';
@@ -69,7 +71,7 @@ class _GoalsPageState extends State<UserGoals> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: const Text("Цели"),
+        title: Text(LocaleKeys.Goals.tr()),
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(

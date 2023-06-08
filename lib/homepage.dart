@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:work_out_gym/pages/goals.dart';
 import 'package:work_out_gym/pages/nutrition/nutrition.dart';
 import 'package:work_out_gym/pages/profile.dart';
 import 'package:work_out_gym/pages/tips.dart';
+import 'package:work_out_gym/translations/locale_keys.g.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -35,22 +37,22 @@ class _HomePageState extends State<HomePage> {
         currentIndex: _selectedIndex,
         onTap: _navigateBottomBar,
         type: BottomNavigationBarType.fixed,
-        items: const [
+        items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.align_horizontal_left),
-              label: 'Цели',
+              icon: const Icon(Icons.align_horizontal_left),
+              label: LocaleKeys.Goals.tr(),
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_basket_outlined),
-              label: 'Питание'
+              icon: const Icon(Icons.shopping_basket_outlined),
+              label: LocaleKeys.Nutrition.tr()
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.tips_and_updates),
-              label: 'Советы',
+              icon: const Icon(Icons.tips_and_updates),
+              label: LocaleKeys.Tips.tr(),
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Профиль',
+              icon: const Icon(Icons.person),
+              label: LocaleKeys.Profile.tr(),
           ),
         ],
       ),

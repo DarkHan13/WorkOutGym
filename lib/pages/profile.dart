@@ -1,24 +1,65 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:work_out_gym/pages/profile/profile_images.dart';
 import 'package:work_out_gym/pages/settings.dart';
+import 'package:work_out_gym/translations/locale_keys.g.dart';
 
-class UserProfile extends StatelessWidget {
+class UserProfile extends StatefulWidget {
   UserProfile({super.key});
 
+  @override
+  State<UserProfile> createState() => _UserProfileState();
+}
+
+class _UserProfileState extends State<UserProfile> {
   final user = FirebaseAuth.instance.currentUser!;
 
   void signUserOut() {
     FirebaseAuth.instance.signOut();
   }
 
+  List<CustomListTile> customListTiles = [
+    CustomListTile(
+      icon: Icons.insights,
+      title: LocaleKeys.Progress.tr(),
+      onTap: (context) {},
+    ),
+    CustomListTile(
+      icon: Icons.photo_camera_outlined,
+      title: LocaleKeys.Photos.tr(),
+      onTap: (context) {
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const ProfileImages()));
+      },
+    ),
+    CustomListTile(
+      title: LocaleKeys.Settings.tr(),
+      icon: CupertinoIcons.settings,
+      onTap: (context) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const Settings(),
+          ),
+        );
+      },
+    ),
+    CustomListTile(
+      title: LocaleKeys.Exit.tr(),
+      icon: CupertinoIcons.escape,
+      onTap: (context) {
+        FirebaseAuth.instance.signOut();
+      },
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: const Text("Профиль"),
+        title: Text(LocaleKeys.Profile.tr()),
         centerTitle: true,
       ),
       body: ListView(
@@ -34,7 +75,7 @@ class UserProfile extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                user.email != null ? user.email! : "Загрзука",
+                user.email != null ? user.email! : LocaleKeys.Loading.tr(),
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -90,36 +131,4 @@ class CustomListTile {
   });
 }
 
-List<CustomListTile> customListTiles = [
-  CustomListTile(
-    icon: Icons.insights,
-    title: "История прогресса",
-    onTap: (context) {},
-  ),
-  CustomListTile(
-    icon: Icons.photo_camera_outlined,
-    title: "Фотографии",
-    onTap: (context) {
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => const ProfileImages()));
-    },
-  ),
-  CustomListTile(
-    title: "Настройки",
-    icon: CupertinoIcons.settings,
-    onTap: (context) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-            builder: (context) => const Settings(),
-        ),
-      );
-    },
-  ),
-  CustomListTile(
-    title: "Выйти",
-    icon: CupertinoIcons.escape,
-    onTap: (context) {
-      FirebaseAuth.instance.signOut();
-    },
-  ),
-];
+
