@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:work_out_gym/firebase_options.dart';
 import 'package:work_out_gym/pages/auth.dart';
 import 'package:work_out_gym/theme_provider.dart';
@@ -20,6 +21,8 @@ void main() async{
   await Hive.initFlutter();
   var box = await Hive.openBox('mybox');
 
+  ThemeName savedTheme = await readThemeFromLocalStorage();
+
   runApp(
       ChangeNotifierProvider<ThemeProvider>(
         create: (_) => ThemeProvider(),
@@ -28,14 +31,23 @@ void main() async{
             path: 'assets/translations', // <-- change the path of the translation files
             fallbackLocale: Locale('en'),
             assetLoader: const CodegenLoader(),
-            child: MyApp()
+            child: MyApp(theme: savedTheme,)
         ),
       )
   );
 }
 
+Future<ThemeName> readThemeFromLocalStorage() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String value = prefs.getString('Theme') ?? ThemeName.dark.toString();
+  ThemeName parsedEnum =  EnumParser.parse(value, ThemeName.values) ?? ThemeName.dark;
+  return parsedEnum;
+}
+
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+   ThemeName theme;
+
+  MyApp({super.key, required this.theme});
 
   final ThemeData defaultTheme = ThemeData();
 
@@ -96,13 +108,28 @@ class MyApp extends StatelessWidget {
   );
 
   ThemeData themePicker(ThemeName themeName) {
+
+    saveTheme(themeName.toString());
     if (themeName == ThemeName.dark) {
+
       return darkTheme;
     } else if (themeName == ThemeName.light) {
       return lightTheme;
     } else {
       return defaultTheme;
     }
+  }
+
+  void saveTheme(String name) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('Theme', name);
+  }
+
+   Future<ThemeName> readThemeFromLocalStorage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String value = prefs.getString('Theme') ?? ThemeName.dark.toString();
+    ThemeName parsedEnum =  EnumParser.parse(value, ThemeName.values) ?? ThemeName.dark;
+    return parsedEnum;
   }
 
   @override
@@ -112,10 +139,19 @@ class MyApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       theme: themePicker(
-          Provider.of<ThemeProvider>(context).themeName,
+        Provider.of<ThemeProvider>(context).themeName,
       ),
       debugShowCheckedModeBanner: false,
       home: const AuthPage(),
+    );
+  }
+}
+
+class EnumParser {
+  static ThemeName? parse<T>(String value, List<ThemeName> enumValues) {
+    return enumValues.firstWhere(
+          (enumValue) => enumValue.toString().split('.').last == value,
+      orElse: () => ThemeName.dark,
     );
   }
 }

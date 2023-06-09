@@ -263,8 +263,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       const SizedBox(width: 4),
                       GestureDetector(
                         onTap: widget.onTap!,
-                        child: const Text(LocaleKeys.Login_now,
-                            style: TextStyle(
+                        child: Text(LocaleKeys.Login_now.tr(),
+                            style: const TextStyle(
                               color: Colors.blue,
                               fontWeight: FontWeight.bold,
                             )),

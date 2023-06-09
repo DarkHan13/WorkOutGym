@@ -152,14 +152,14 @@ static const Map<String,dynamic> kk = {
   "Photos": "Фото",
   "Exit": "Шығу",
   "Tips": "Кеңестер",
-  "Nutrition": "Дұрыс тамақтану",
-  "Fat_loss": "жірді кемеу",
+  "Nutrition": "Тамақтану",
+  "Fat_loss": "Арықтау",
   "Bulking": "Масса",
-  "If_your_goal_is_to_burn_fat_achieve_maximum_muscle_relief_you": "Егер сіздің мақсатыңыз майды жағу және бұлшықеттерді барынша жеңілдету болса, бұл диета сізге арналған.",
+  "If_your_goal_is_to_burn_fat_achieve_maximum_muscle_relief_you": "Егер сіздің мақсатыңыз арықтау және бұлшықеттерді жетілдіру болса, бұл мәзір сіз үшін.",
   "Select_menu": "Мәзірді таңдау",
   "Snack": "Тәске басар",
   "Dinner": "Кешкі ас",
-  "If_your_goal_is_to_gain_mass_and_achieve_muscle_volume_you": "Егер сіздің мақсатыңыз масса жинап, бұлшықет көлемін ұлғайту болса, бұл диета сізге арналған.",
+  "If_your_goal_is_to_gain_mass_and_achieve_muscle_volume_you": "Егер сіздің мақсатыңыз салмақ қосу және бұлшықеттердің көлемін үлкейту болса, бұл мәзір сіз үшін.",
   "Breakfast": "Таңғы ас",
   "Lunch": "Түскі ас",
   "Goals": "мақсаттарыңыз",
@@ -178,7 +178,7 @@ static const Map<String,dynamic> kk = {
   "Login_now": "Қазір кіру",
   "Welcome_back_you_been_missed": "Қош келдіңіз!",
   "eggs": "жұмыртқалар",
-  "onion": "садақ",
+  "onion": "пияз",
   "bacon": "бекон",
   "sausages": "шұжықтар",
   "cheese": "ірімшік",
@@ -256,7 +256,7 @@ static const Map<String,dynamic> kk = {
   "fat_los_Breakfast": "Май жағатын таңғы ас",
   "fat_los_Dinner": "Артық салмақтан арылуға арналған кешкі ас",
   "fat_los_lunch": "Артық салмақтан арылуға арналған түскі ас",
-  "fat_los_Snack": "Майдың жағылуы: тағамдар"
+  "fat_los_Snack": "Арықтау: Тіске басар"
 };
 static const Map<String,dynamic> ru = {
   "Sign_up": "Зарегистрироваться",

@@ -20,8 +20,18 @@ class UserNutrition extends StatelessWidget{
             centerTitle: true,
             bottom: TabBar(
               tabs: <Widget>[
-                Tab(text: LocaleKeys.Fat_loss.tr()),
-                Tab(text: LocaleKeys.Bulking.tr()),
+                Tab(child: Text(
+                    LocaleKeys.Fat_loss.tr(),
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor, // Set the desired text color
+                  ),
+                )),
+                Tab(child: Text(
+                  LocaleKeys.Bulking.tr(),
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor, // Set the desired text color
+                  ),
+                )),
               ],
             ),
           ),
@@ -50,7 +60,7 @@ class _DryingState extends State<Drying> {
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-        initialVideoId: 'dQw4w9WgXcQ',
+        initialVideoId: 'h8fWfE15sRs',
         flags: const YoutubePlayerFlags(
           autoPlay: false,
         ),
@@ -184,7 +194,7 @@ class _MassState extends State<Mass> {
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: 'dQw4w9WgXcQ',
+      initialVideoId: 'h8fWfE15sRs',
       flags: const YoutubePlayerFlags(
         autoPlay: false,
       ),
