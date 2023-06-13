@@ -1,7 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:work_out_gym/pages/nutrition/four_meal.dart';
 import 'package:work_out_gym/pages/nutrition/meal.dart';
+import 'package:work_out_gym/translations/locale_keys.g.dart';
 
 class DryingBreakfast extends StatelessWidget {
   const DryingBreakfast({super.key});
@@ -9,46 +10,46 @@ class DryingBreakfast extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FourMeal(
-        title: 'fat_los_Breakfast'.tr,
+        title: LocaleKeys.fat_los_Breakfast.tr(),
         meals: [
           Meal(
             videoId: 'pXxnjW0LvP8',
-            name: 'Bacon_and_eggs'.tr,
+            name: LocaleKeys.Bacon_and_eggs.tr(),
             ingredients: [
-            'eggs'.tr,
-            'onion'.tr,
-            'bacon'.tr,
-            'sausages'.tr,
-            'cheese'.tr,
+            LocaleKeys.eggs.tr(),
+            LocaleKeys.onion.tr(),
+            LocaleKeys.bacon.tr(),
+            LocaleKeys.sausages.tr(),
+            LocaleKeys.cheese.tr(),
             ],
           ),
           Meal(
             videoId: 'p4ls3IqHydw',
-            name: 'fruit_muesli'.tr,
+            name: LocaleKeys.fruit_muesli.tr(),
             ingredients: [
-            'dried_fruits'.tr,
-            'warm_water'.tr,
-            'milk'.tr,
+            LocaleKeys.dried_fruits.tr(),
+            LocaleKeys.warm_water.tr(),
+            LocaleKeys.milk.tr(),
             ],
           ),
           Meal(
             videoId: 'iBDd1mMzzIQ',
-            name: 'Banana_chips_with_yogurt'.tr,
+            name: LocaleKeys.Banana_chips_with_yogurt.tr(),
             ingredients: [
-            'dried_bananas'.tr,
-            'yogurt'.tr,
-            'fresh_berries'.tr,
+            LocaleKeys.dried_bananas.tr(),
+            LocaleKeys.yogurt.tr(),
+            LocaleKeys.fresh_berries.tr(),
             ],
           ),
           Meal(
             videoId: 'OfUSaV3yp58',
-            name: 'oatmeal_cookies'.tr,
+            name: LocaleKeys.oatmeal_cookies.tr(),
             ingredients: [
-            'cereals'.tr,
-            'raisin'.tr,
-            'coconut_flakes'.tr,
-            'honey'.tr,
-            'vegetable_oil'.tr,
+            LocaleKeys.cereals.tr(),
+            LocaleKeys.raisin.tr(),
+            LocaleKeys.coconut_flakes.tr(),
+            LocaleKeys.honey.tr(),
+            LocaleKeys.vegetable_oil.tr(),
             ],
           ),
         ]

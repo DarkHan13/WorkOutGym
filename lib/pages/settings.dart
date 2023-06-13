@@ -1,5 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:work_out_gym/translations/locale_keys.g.dart';
+import '../theme_provider.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -11,50 +14,52 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'.tr),
+        title: Text(LocaleKeys.Settings.tr()),
       ),
       body: ListView(
         children: <Widget>[
           ElevatedButton(
             onPressed: () {
-              // TODO: implement theme switching
+              themeProvider.toggleTheme(ThemeName.light);
             },
-            child: Text('Light_Theme'.tr),
+            child: Text(LocaleKeys.Light_Theme.tr()),
           ),
           ElevatedButton(
             onPressed: () {
-              // TODO: implement theme switching
+              themeProvider.toggleTheme(ThemeName.dark);
             },
-            child: Text('Dark_Theme'.tr),
+            child: Text(LocaleKeys.Dark_Theme.tr()),
           ),
           ElevatedButton(
             onPressed: () {
-              // TODO: implement theme switching
+              themeProvider.toggleTheme(ThemeName.defaultTheme);
             },
-            child: Text('Default_Theme'.tr),
+            child: Text(LocaleKeys.Default_Theme.tr()),
           ),
 
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
 
           ElevatedButton(
             onPressed: () {
-              Get.updateLocale(const Locale('ru', 'RU'));
+              context.setLocale(Locale('ru'));
             },
-            child: Text('Russian'.tr),
+            child: Text(LocaleKeys.Russian.tr()),
           ),
           ElevatedButton(
             onPressed: () {
-              Get.updateLocale(const Locale('en', 'UK'));
+              context.setLocale(Locale('en'));
             },
-            child: Text('English'.tr),
+            child: Text(LocaleKeys.English.tr()),
           ),
           ElevatedButton(
             onPressed: () {
-              Get.updateLocale(const Locale('kk', 'KK'));
+              context.setLocale(Locale('kk'));
             },
-            child: Text('Kazakh'.tr),
+            child: Text(LocaleKeys.Kazakh.tr()),
           ),
 
         ],

@@ -1,7 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:work_out_gym/pages/nutrition/four_meal.dart';
 import 'package:work_out_gym/pages/nutrition/meal.dart';
+import 'package:work_out_gym/translations/locale_keys.g.dart';
 
 class DryingSnacks extends StatelessWidget {
   const DryingSnacks({super.key});
@@ -9,43 +10,43 @@ class DryingSnacks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FourMeal(
-      title: 'fat_los_Snack'.tr,
+      title: LocaleKeys.fat_los_Snack.tr(),
       meals: [
         Meal(
           videoId: 'w_2UIG4Wyl0',
-          name: 'Dried_vegetable_chips'.tr,
+          name: LocaleKeys.Dried_vegetable_chips.tr(),
           ingredients: [
-            'carrot'.tr,
-            'beet'.tr,
-            'Bell_pepper'.tr,
-            'sweet_potato'.tr,
+            LocaleKeys.carrot.tr(),
+            LocaleKeys.beet.tr(),
+            LocaleKeys.Bell_pepper.tr(),
+            LocaleKeys.sweet_potato.tr(),
           ],
         ),
         Meal(
           videoId: 'U2NtcQhQEB4',
-          name: 'Dried_nuts_and_seeds'.tr,
+          name: LocaleKeys.Dried_nuts_and_seeds.tr(),
           ingredients: [
-            'almond'.tr,
-            'hazelnut'.tr,
-            'Walnut'.tr,
-            'sunflower_seeds'.tr,
-            'pumpkin_seeds'.tr,
+            LocaleKeys.almond.tr(),
+            LocaleKeys.hazelnut.tr(),
+            LocaleKeys.Walnut.tr(),
+            LocaleKeys.sunflower_seeds.tr(),
+            LocaleKeys.pumpkin_seeds.tr(),
           ],
         ),
         Meal(
           videoId: 'OoOyWPfS_4w',
-          name: 'Dried_fruit_rolls'.tr,
+          name: LocaleKeys.Dried_fruit_rolls.tr(),
           ingredients: [
-            'raisin'.tr,
-            'prunes'.tr,
-            'apricots'.tr,
+            LocaleKeys.raisin.tr(),
+            LocaleKeys.prunes.tr(),
+            LocaleKeys.apricots.tr(),
           ],
         ),
         Meal(
           videoId: 'VrSM_4vPVQY',
-          name: 'dried_seaweed'.tr,
+          name: LocaleKeys.dried_seaweed.tr(),
           ingredients: [
-              'seaweed'.tr,
+              LocaleKeys.seaweed.tr(),
           ],
         ),
       ],

@@ -1,12 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:work_out_gym/pages/profile/profile_images.dart';
 import 'package:work_out_gym/pages/settings.dart';
+import 'package:work_out_gym/translations/locale_keys.g.dart';
 
 class UserProfile extends StatefulWidget {
-  const UserProfile({super.key});
+  UserProfile({super.key});
 
   @override
   State<UserProfile> createState() => _UserProfileState();
@@ -22,19 +23,19 @@ class _UserProfileState extends State<UserProfile> {
   List<CustomListTile> customListTiles = [
     CustomListTile(
       icon: Icons.insights,
-      title: 'Progress'.tr,
+      title: LocaleKeys.Progress.tr(),
       onTap: (context) {},
     ),
     CustomListTile(
       icon: Icons.photo_camera_outlined,
-      title: 'Photos'.tr,
+      title: LocaleKeys.Photos.tr(),
       onTap: (context) {
         Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => const ProfileImages()));
       },
     ),
     CustomListTile(
-      title: 'Settings'.tr,
+      title: LocaleKeys.Settings.tr(),
       icon: CupertinoIcons.settings,
       onTap: (context) {
         Navigator.of(context).push(
@@ -45,7 +46,7 @@ class _UserProfileState extends State<UserProfile> {
       },
     ),
     CustomListTile(
-      title: 'Exit'.tr,
+      title: LocaleKeys.Exit.tr(),
       icon: CupertinoIcons.escape,
       onTap: (context) {
         FirebaseAuth.instance.signOut();
@@ -58,7 +59,7 @@ class _UserProfileState extends State<UserProfile> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text('Profile'.tr),
+        title: Text(LocaleKeys.Profile.tr()),
         centerTitle: true,
       ),
       body: ListView(
@@ -74,7 +75,7 @@ class _UserProfileState extends State<UserProfile> {
               ),
               const SizedBox(height: 10),
               Text(
-                user.email != null ? user.email! : 'Loading'.tr,
+                user.email != null ? user.email! : LocaleKeys.Loading.tr(),
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

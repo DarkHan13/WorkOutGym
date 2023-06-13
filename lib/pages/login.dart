@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:work_out_gym/components/dh_button.dart';
@@ -6,7 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:work_out_gym/firebase_options.dart';
 import 'package:work_out_gym/pages/register.dart';
 import 'package:work_out_gym/services/auth_services.dart';
-import 'package:get/get.dart';
+import 'package:work_out_gym/translations/locale_keys.g.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
@@ -95,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   // welcome back, you've been missed
                   Text(
-                    'Welcome_back_you_been_missed'.tr,
+                    LocaleKeys.Welcome_back_you_been_missed.tr(),
                     style: TextStyle(
                       color: Colors.grey[300],
                       fontSize: 16,
@@ -107,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                   // username textfield
                   DHTextField(
                     controller: emailController,
-                    hintText:  'Email'.tr,
+                    hintText:  LocaleKeys.Email.tr(),
                     obscureText: false,
                   ),
 
@@ -116,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                   // password textfield
                   DHTextField(
                     controller: passwordController,
-                    hintText:  'Password'.tr,
+                    hintText:  LocaleKeys.Password.tr(),
                     obscureText: true,
                   ),
 
@@ -128,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          'Forgot_Password'.tr,
+                          LocaleKeys.Forgot_Password.tr(),
                           style: TextStyle(color: Colors.grey[600]),
                         ),
                       ],
@@ -138,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 25),
 
                   // sign in btn
-                  DHButton(onTap: signUserIn, text: 'Sign_in'.tr),
+                  DHButton(onTap: signUserIn, text:  LocaleKeys.Sign_in.tr()),
 
                   const SizedBox(height: 25),
 
@@ -156,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
                           child: Text(
-                            'Or_continue_with'.tr,
+                            LocaleKeys.Or_continue_with.tr(),
                             style: TextStyle(color: Colors.grey[700]),
                           ),
                         ),
@@ -199,13 +200,13 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'not_a_member'.tr,
+                        LocaleKeys.not_a_member.tr(),
                         style: TextStyle(color: Colors.grey[700]),
                       ),
                       const SizedBox(width: 4),
                       GestureDetector(
                         onTap: widget.onTap!,
-                        child: Text('Register_now'.tr,
+                        child: Text( LocaleKeys.Register_now.tr(),
                             style: const TextStyle(
                               color: Colors.blue,
                               fontWeight: FontWeight.bold,
